@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FallenAngleIdle
+  m_Name: FallenAngelIdle1
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -30,21 +30,21 @@ AnimationClip:
       value: {fileID: 21300000, guid: 7b3ed5e7f4c14104c88c2fd099b2f63d, type: 3}
     - time: 0.35
       value: {fileID: 21300000, guid: 559a4c48e9577964fbcf8095fff499b9, type: 3}
-    - time: 0.43333334
+    - time: 0.45
       value: {fileID: 21300000, guid: 9b30afa3c87c28b4799796daefbfd72d, type: 3}
-    - time: 0.51666665
+    - time: 0.53333336
       value: {fileID: 21300000, guid: 91beea1d36692d34a88456f290568bfd, type: 3}
-    - time: 0.6
+    - time: 0.6166667
       value: {fileID: 21300000, guid: 214f4afe739ea2d45825cf23e6a3b15b, type: 3}
-    - time: 0.7
+    - time: 0.71666664
       value: {fileID: 21300000, guid: 9193e49e3f600e34a9597cd11bc1d47c, type: 3}
-    - time: 0.8
+    - time: 0.78333336
       value: {fileID: 21300000, guid: 7263ec1b1f37ef6468e0b99bd8b30eeb, type: 3}
-    - time: 0.9
+    - time: 0.8833333
       value: {fileID: 21300000, guid: 51c616824e735244eade407dcf6fc07c, type: 3}
-    - time: 0.96666664
+    - time: 0.95
       value: {fileID: 21300000, guid: 1a9b761c2fb487545bf0e0692956116d, type: 3}
-    - time: 1.0666667
+    - time: 1.05
       value: {fileID: 21300000, guid: e9963e2b25f55b9489fa502f248e0439, type: 3}
     - time: 1.15
       value: {fileID: 21300000, guid: fb8192b87e3a5d141afca5a7ac0a5d7d, type: 3}
