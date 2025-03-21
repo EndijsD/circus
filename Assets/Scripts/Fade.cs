@@ -24,7 +24,7 @@ public class Fade : MonoBehaviour
             tempColor = img.color;
             tempColor.a = i;
             img.color = tempColor;
-            yield return new WaitForSecondsRealtime(seconds);
+            yield return new WaitForSecondsRealtime(0);
         }
         img.raycastTarget = false;
     }
@@ -38,7 +38,7 @@ public class Fade : MonoBehaviour
             tempColor = img.color;
             tempColor.a = i;
             img.color = tempColor;
-            yield return new WaitForSecondsRealtime(seconds);
+            yield return new WaitForSecondsRealtime(0);
         }
     }
 }
