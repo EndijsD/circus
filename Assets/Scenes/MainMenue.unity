@@ -7156,6 +7156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1140709594}
   - component: {fileID: 1140709595}
+  - component: {fileID: 1140709596}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -7199,6 +7200,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject2: {fileID: 1129043732}
+--- !u!114 &1140709596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140709593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2daea2b902dcd4eaf54f4ac0478104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 0.1
+  jigglePosition: 1
+  positionAmount: {x: 0, y: 0, z: 0}
+  positionFrequency: 10
+  jiggleRotation: 1
+  rotationAmount: {x: 0, y: 0, z: 0}
+  rotationFrequency: 10
+  jiggleScale: 1
+  scaleAmount: {x: 0.1, y: -0.1, z: 0.1}
+  scaleFrequency: 10
 --- !u!1 &1144325809
 GameObject:
   m_ObjectHideFlags: 0
