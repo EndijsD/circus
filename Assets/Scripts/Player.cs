@@ -14,8 +14,9 @@ public class Player : MonoBehaviour
     void Start()
 
     {
+        Vector3 spawnLocation = spawnPoint.transform.position + new Vector3(0, 2, 0);
         characterIndex = PlayerPrefs.GetInt("SelectedCharacter");
-        GameObject mainCharacter = Instantiate(playerPrefabs[characterIndex], spawnPoint.transform.position, spawnPoint.transform.rotation);
+        GameObject mainCharacter = Instantiate(playerPrefabs[characterIndex], spawnLocation, spawnPoint.transform.rotation);
         mainCharacter.GetComponent<Name>().SetPlayerName(PlayerPrefs.GetString("PlayerName"));
 
         otherPlayers = new int[PlayerPrefs.GetInt("PlayerCount")];
@@ -23,9 +24,9 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < otherPlayers.Length-1; i++)
         {
-            spawnPoint.transform.position += new Vector3(4f, 0, 0.08f);
+            spawnLocation += new Vector3(4f, 0, 0.08f);
             index = Random.Range(0, playerPrefabs.Length);
-            GameObject otherCharacter = Instantiate(playerPrefabs[index], spawnPoint.transform.position, spawnPoint.transform.rotation);
+            GameObject otherCharacter = Instantiate(playerPrefabs[index], spawnLocation, spawnPoint.transform.rotation);
             otherCharacter.GetComponent<Name>().SetPlayerName(newArray[Random.Range(0, newArray.Length)]);
         }
     }

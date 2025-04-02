@@ -998,10 +998,10 @@ MonoBehaviour:
       - m_Target: {fileID: 276906194}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
         m_MethodName: ChangeQuality
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 78680018}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2001,9 +2001,12 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: a77dc766d229ea446ba02722f9897bbc, type: 2}
   audioSlider: {fileID: 1565738430}
   resolutionsDropdown: {fileID: 2074489524}
+  fullscreenToggle: {fileID: 655174981}
+  qualitySlider: {fileID: 78680018}
   lowText: {fileID: 1992547354}
   mediumText: {fileID: 896274100}
   highText: {fileID: 886556838}
+  fpsSlider: {fileID: 594373588}
   fpsText: {fileID: 1564971906}
 --- !u!1 &288882885
 GameObject:
@@ -3419,10 +3422,10 @@ MonoBehaviour:
       - m_Target: {fileID: 276906194}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
         m_MethodName: ChangeFPS
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 594373588}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3800,7 +3803,7 @@ MonoBehaviour:
       - m_Target: {fileID: 276906194}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
         m_MethodName: ToggleFullscreen
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -12968,7 +12971,7 @@ MonoBehaviour:
       - m_Target: {fileID: 276906194}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
         m_MethodName: ChangeResolution
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

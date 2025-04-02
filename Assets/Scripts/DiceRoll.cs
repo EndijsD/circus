@@ -54,6 +54,7 @@ public class DiceRoll : MonoBehaviour
         transform.rotation = new Quaternion(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360), 1);
         thrown = false;
         hasLanded = false;
+        diceFaceNum = "";
     }
 
     private void RollDice()
