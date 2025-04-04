@@ -7,72 +7,131 @@ public class PlayerMover : MonoBehaviour
     private BoardCreator boardCreator;
     private DiceRoll diceRoll;
     private int positionIndex = 0;
-    private bool isMoving = false;
-
-    public static int currentPlayerIndex = 0; // Track the current player's turn
-    public static int totalPlayers = 0; // Number of players
-
-    private Name[] players;  // Store all Name components (which are attached to player GameObjects)
-    private int[] playerDiceValues;  // Store dice values for each player
+    private Vector3 positionOffset;
+    public Animator animator;
+    public int playerIndex;
+    public int diceThorwnCount = 0;
+    public int thorwnDiceNumberSum = 0;
+    private bool speedUp = false;
 
     void Start()
     {
         diceRoll = FindObjectOfType<DiceRoll>();
         boardCreator = FindObjectOfType<BoardCreator>();
+        animator = gameObject.GetComponent<Animator>();
 
-        players = FindObjectsOfType<Name>();  // This finds all Name components attached to player GameObjects
-        totalPlayers = players.Length;  // Set totalPlayers count
+        if (boardCreator != null && boardCreator.spawnedPlatforms.Count > 0)
+            positionOffset = transform.position - boardCreator.spawnedPlatforms[0].transform.position;
 
-        playerDiceValues = new int[totalPlayers];  // Array to hold dice values for each player
     }
 
     void Update()
     {
-        if (!isMoving && diceRoll != null && diceRoll.hasLanded && Convert.ToInt32(diceRoll.diceFaceNum) > 0 && currentPlayerIndex < totalPlayers)
-        {
-            // Set the dice value for the current player
-            playerDiceValues[currentPlayerIndex] = Convert.ToInt32(diceRoll.diceFaceNum);
+        if (Input.GetKeyDown(KeyCode.S))
+            speedUp = !speedUp;
 
-            // Start moving the current player
-            StartCoroutine(MoveToPosition(playerDiceValues[currentPlayerIndex]));
-            diceRoll.diceFaceNum = "0"; // Reset dice result after reading
+        for (int i = 1; i <= 9; i++)
+            if (!TurnManager.Instance.isMoving && Input.GetKeyDown(KeyCode.Alpha1 + (i - 1)) && TurnManager.Instance.players[TurnManager.Instance.currentPlayerIndex] == this)
+                StartCoroutine(MoveToPosition(i));
+
+
+            if (!TurnManager.Instance.isMoving && diceRoll != null && diceRoll.hasLanded)
+        {
+            int diceResult = Convert.ToInt32(diceRoll.diceFaceNum);
+            
+            if (diceResult > 0 && TurnManager.Instance.players[TurnManager.Instance.currentPlayerIndex] == this)
+            {
+                diceThorwnCount++;
+                thorwnDiceNumberSum += diceResult;
+                StartCoroutine(MoveToPosition(diceResult));
+                diceRoll.diceFaceNum = "0";
+            }
         }
     }
 
     IEnumerator MoveToPosition(int steps)
     {
-        isMoving = true;
+        TurnManager.Instance.isMoving = true;
+        animator.SetBool("isWalking", true);
 
-        // Get the current player's GameObject by accessing their Name component
-        GameObject currentPlayer = players[currentPlayerIndex].gameObject;
+        int maxIndex = boardCreator.spawnedPlatforms.Count - 1;
+        bool movingForward = true;
 
         for (int i = 0; i < steps; i++)
         {
-            positionIndex++;
-            if (positionIndex >= boardCreator.spawnedPlatforms.Count)
+            if (movingForward)
             {
-                positionIndex = boardCreator.spawnedPlatforms.Count - 1; // Stay within bounds
-                break;
+                positionIndex++;
+                if (positionIndex > maxIndex)
+                {
+                    movingForward = false;
+                    positionIndex = maxIndex - 1;
+                }
+            }
+            else
+            {
+                positionIndex--;
             }
 
-            Vector3 targetPos = boardCreator.spawnedPlatforms[positionIndex].transform.position + new Vector3(0, 2, 0);
-            float elapsedTime = 0f;
-            float duration = 0.5f;
+            Vector3 currentPos = transform.position;
+            Vector3 nextPos = boardCreator.spawnedPlatforms[positionIndex].transform.position + positionOffset;
 
-            Vector3 startPos = currentPlayer.transform.position;
+            if (nextPos.x > currentPos.x)
+                gameObject.GetComponent<SpriteRenderer>().flipX = false;
+            else if (nextPos.x < currentPos.x)
+                gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            float elapsedTime = 0f;
+            float duration = speedUp ? 0f : 0.5f;
+            Vector3 startPos = transform.position;
+
             while (elapsedTime < duration)
             {
-                currentPlayer.transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / duration);
+                transform.position = Vector3.Lerp(startPos, nextPos, elapsedTime / duration);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            currentPlayer.transform.position = targetPos;
+
+            transform.position = nextPos;
             yield return new WaitForSeconds(0.2f);
         }
 
-        // After movement, reset the dice and move to the next player
-        isMoving = false;
-        currentPlayerIndex = (currentPlayerIndex + 1) % totalPlayers; // Move to the next player (loop back after last player)
-        diceRoll.Initialize(true); // Reset the dice for the next turn
+        int newPositionIndex = boardCreator.CheckForLadder(positionIndex);
+        bool isLadder = newPositionIndex != positionIndex;
+
+        if (isLadder)
+        {
+            Debug.Log($"Ladder found! Moving from {positionIndex} to {newPositionIndex}");
+            positionIndex = newPositionIndex;
+            yield return StartCoroutine(ClimbLadder(newPositionIndex));
+        }
+
+        if (positionIndex == maxIndex)
+        {
+            TurnManager.Instance.TriggerVictory(this);
+        }
+
+        animator.SetBool("isWalking", false);
+        TurnManager.Instance.NextTurn();
+        diceRoll.Initialize(true);
+        TurnManager.Instance.isMoving = false;
+    }
+
+    IEnumerator ClimbLadder(int targetIndex)
+    {
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = boardCreator.spawnedPlatforms[targetIndex].transform.position + positionOffset;
+
+        float elapsedTime = 0f;
+        float climbDuration = speedUp ? 0f : 1.5f;
+
+        while (elapsedTime < climbDuration)
+        {
+            transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / climbDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPos;
+        positionIndex = targetIndex;
     }
 }

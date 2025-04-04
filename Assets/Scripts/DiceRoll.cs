@@ -33,7 +33,8 @@ public class DiceRoll : MonoBehaviour
                         if(!thrown)
                             thrown = true;
 
-                        RollDice();
+                        if(!TurnManager.Instance.isMoving)
+                            RollDice();
                     }
                 }
             }

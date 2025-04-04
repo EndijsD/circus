@@ -17,4 +17,9 @@ public class Name : MonoBehaviour
         tmp.text = name;
         tmp.color = new Color32((byte)Random.Range(0, 255), (byte)Random.Range(0, 255), (byte)Random.Range(0, 255), 255);
     }
+
+    public string GetPlayerName()
+    {
+        return tmp.text;
+    }
 }

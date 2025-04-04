@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CharacterSelection : MonoBehaviour
@@ -10,14 +11,20 @@ public class CharacterSelection : MonoBehaviour
     string characterName;
     public int playerCount = 2;
     public SceneChange sceneChange;
+    public GameObject MainMenu;
+    public GameObject CharacterMenu;
 
     void Awake()
     {
+        MainMenu.SetActive(true);
+        CharacterMenu.SetActive(false);
+
         characterIndex = 0;
 
         foreach (GameObject character in characters)
         {
             character.SetActive(false);
+            character.transform.Find("NameField").gameObject.SetActive(false);
         }
 
         characters[characterIndex].SetActive(true);

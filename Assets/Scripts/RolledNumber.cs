@@ -23,7 +23,7 @@ public class RolledNumber : MonoBehaviour
         {
             if (diceRoll.hasLanded)
                 rolledNumberText.text = diceRoll.diceFaceNum;
-            else rolledNumberText.text = "?";
+            //else rolledNumberText.text = "?";
         }
         else
         {
